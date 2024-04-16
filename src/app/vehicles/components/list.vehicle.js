@@ -4,13 +4,24 @@ import Image from "next/image";
 
 import eliminarBh from "../../../../public/Assets/Icon_eliminar.svg";
 import editarBt from "../../../../public/Assets/Icon_editar.svg";
+import eliminarBh1 from "../../../../public/Assets/Icon_eliminar1.svg";
+import editarBt1 from "../../../../public/Assets/Icon_editar1.svg";
 
 import * as VehicleServer from "../../services/vehicle.service";
 
+export const dynamic = "force-dynamic"
 
-const ListVehicle= ({page}) =>{
-    const [vehicles, setVehicles] = useState(null)
+
+const ListVehicle= ({page, vehicles, setVehicles, editing}) =>{
     
+    const getEditButtonImage = () => {
+        return editing ? editarBt1 : editarBt; // Swap image sources based on editing
+      };
+    
+    const getDeleteButtonImage = () => {
+        return editing ? eliminarBh1 : eliminarBh; // Swap image sources based on editing
+      };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -22,7 +33,7 @@ const ListVehicle= ({page}) =>{
           };
       
           fetchData();
-    }, []);
+    }, [editing]);
 
     if (vehicles) {
         return (
@@ -45,13 +56,12 @@ const ListVehicle= ({page}) =>{
                             <div className="flex justify-between gap-x-2">
                                 <div >{vehicle.aspirante}</div>
                                 <div >
-                                <button className="appearance-none cursor-pointer bg-transparent float-left mr-2" onClick={() => page(vehicle)}>
-                                    <Image src={editarBt} className="w-5 h-5 rounded-full" alt="Botón 2"/>
-                                </button>
-                                <button className="appearance-none cursor-pointer bg-transparent float-right ml-2" onClick={() => page(vehicle.id)}>
-                                    <Image src={eliminarBh} className="w-5 h-5 rounded-full" alt="Botón 1"/>
-                                </button>
-                                
+                                    <button className="appearance-none cursor-pointer bg-transparent float-left mr-2" onClick={() => page(vehicle, "add")}>
+                                        <Image src={getEditButtonImage()} className="w-5 h-5 rounded-full" alt="Botón 2"/>
+                                    </button>
+                                    <button className="appearance-none cursor-pointer bg-transparent float-right ml-2" onClick={() => page(vehicle, "delete")}>
+                                        <Image src={getDeleteButtonImage()} className="w-5 h-5 rounded-full" alt="Botón 1"/>
+                                    </button>
                                 </div>
                             </div>
                         </td>

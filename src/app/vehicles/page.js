@@ -40,7 +40,7 @@ function Vehicle(params) {
       };
 
     return (
-        <div className="container mx-auto bg-white">
+        <div className="container mx-auto bg-white" style={{maxWidth:1080}}>
             <div className="flex gap-x-10">
                 <FormVehicle 
                 vehicle_data={vehicle_data} 

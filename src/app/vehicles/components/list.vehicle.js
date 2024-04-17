@@ -14,12 +14,12 @@ export const dynamic = "force-dynamic"
 
 const ListVehicle= ({page, vehicles, setVehicles, editing}) =>{
     
-    const getEditButtonImage = () => {
-        return editing ? editarBt1 : editarBt; // Swap image sources based on editing
+    const getEditButtonImage = (vehicleid) => {
+        return editing && vehicleid ? editarBt1 : editarBt; 
       };
     
-    const getDeleteButtonImage = () => {
-        return editing ? eliminarBh1 : eliminarBh; // Swap image sources based on editing
+    const getDeleteButtonImage = (vehicleid) => {
+        return editing && vehicleid ? eliminarBh1 : eliminarBh; 
       };
 
     useEffect(() => {
@@ -57,10 +57,10 @@ const ListVehicle= ({page, vehicles, setVehicles, editing}) =>{
                                 <div >{vehicle.aspirante}</div>
                                 <div >
                                     <button className="appearance-none cursor-pointer bg-transparent float-left mr-2" onClick={() => page(vehicle, "add")}>
-                                        <Image src={getEditButtonImage()} className="w-5 h-5 rounded-full" alt="Botón 2"/>
+                                        <Image src={getEditButtonImage(vehicle.id)} className="w-5 h-5 rounded-full" alt="Botón 2"/>
                                     </button>
                                     <button className="appearance-none cursor-pointer bg-transparent float-right ml-2" onClick={() => page(vehicle, "delete")}>
-                                        <Image src={getDeleteButtonImage()} className="w-5 h-5 rounded-full" alt="Botón 1"/>
+                                        <Image src={getDeleteButtonImage(vehicle.id)} className="w-5 h-5 rounded-full" alt="Botón 1"/>
                                     </button>
                                 </div>
                             </div>

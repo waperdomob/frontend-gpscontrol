@@ -7,10 +7,15 @@ export const dynamic = "force-dynamic"
 import { useRouter } from "next/navigation";
 import * as VehicleServer from "../../services/vehicle.service";
 
+import Icon_cancelar from "../../../../public/Assets/Icon_cancelar.svg";
+import Icon_confirmar from "../../../../public/Assets/Icon_confirmar.svg";
 import Icon_crear from "../../../../public/Assets/Icon_crear.svg";
 import Icon_vehiculo from "../../../../public/Assets/Icon_vehiculo.svg";
+import Icon_vehiculo1 from "../../../../public/Assets/Icon_vehiculo1.svg";
 import Icon_puntoubicacion from "../../../../public/Assets/Icon_puntoubicacion.svg";
+import Icon_puntoubicacion1 from "../../../../public/Assets/Icon_puntoubicacion1.svg";
 import Icon_persona from "../../../../public/Assets/Icon_persona.svg";
+import Icon_persona1 from "../../../../public/Assets/Icon_persona1.svg";
 
 
 const FormVehicle= ({vehicle_data, setVehicle_data, editing, setEditing, updateVehicles, isHidden, setIsHidden}) =>{
@@ -32,6 +37,7 @@ const FormVehicle= ({vehicle_data, setVehicle_data, editing, setEditing, updateV
                 const res = await VehicleServer.UpdateVehicle(vehicle_data.id, formData);
                 updateVehicles(res)
                 setEditing(false);
+                setIsHidden(true);
                 router.refresh();
             } catch (error) {
                 console.log("error",error);
@@ -41,6 +47,7 @@ const FormVehicle= ({vehicle_data, setVehicle_data, editing, setEditing, updateV
             try {
                 const res = await VehicleServer.RegisterVehicle(formData);
                 updateVehicles(res)
+                setIsHidden(true);
                 router.refresh();
             } catch (error) {
                 console.log("error", error);
@@ -62,7 +69,46 @@ const FormVehicle= ({vehicle_data, setVehicle_data, editing, setEditing, updateV
         setEditing(false);
         setIsHidden(true);
     }
+    const getUpdateButtonImage = () => {
+        return editing ? 
+        <button 
+        type="submit" 
+        className="object-right">
+            <Image src={Icon_confirmar} className="w-5 h-5 rounded-full" alt="Botón 2"/>
+        </button> 
+        : 
+        <button 
+            type="submit" 
+            className="block rounded-md px-8 py-2 w-full text-gray-900 shadow-sm ring-1 ring-inset ring-01BEDB-600 placeholder:text-gray-400 sm:text-sm sm:leading-6">
+            Crear
+        </button>;
+    };
     
+    const getCancelButtonImage = () => {
+        return editing ? 
+        <button 
+        onClick={ClickCancel}
+        className="ml-sm:10 md:ml-20 lg:ml-40">
+            <Image src={Icon_cancelar} className="w-5 h-5 rounded-full" alt="Botón 2"/>
+        </button>
+        : 
+        <button 
+            onClick={ClickCancel}
+            className="block rounded-md px-8 py-2 w-full text-gray-900 shadow-sm ring-1 ring-inset ring-red-600 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+        >
+            Cancelar
+        </button>;
+    };
+    const getEditButtonVehiculo = () => {
+        return editing || !isHidden ? Icon_vehiculo1 : Icon_vehiculo; 
+    };
+    
+    const getEditButtonUbicacion = () => {
+        return editing || !isHidden ? Icon_puntoubicacion1 : Icon_puntoubicacion; 
+    };
+    const getEditButtonPersona = () => {
+        return editing || !isHidden ? Icon_persona1 : Icon_persona; 
+    };
     return (
         
         <div className='rounded-md space-y-5 p-10 border border-[#C5C5C5] '>
@@ -73,7 +119,7 @@ const FormVehicle= ({vehicle_data, setVehicle_data, editing, setEditing, updateV
             </button>
         <form action=""  onSubmit={handleSubmit}>
             <div className="flex justify-between gap-x-4 mb-2">
-                <Image src={Icon_vehiculo}  alt="Botón 2"/>
+                <Image src={getEditButtonVehiculo()}  alt="Botón 2"/>
                 <input 
                 value={vehicle_data?.marca || ""}
                 type="text" name='marca' 
@@ -81,7 +127,7 @@ const FormVehicle= ({vehicle_data, setVehicle_data, editing, setEditing, updateV
                 onChange={handleInputChange}/>
             </div>
             <div className="flex justify-between gap-x-4 mb-2">
-                <Image src={Icon_puntoubicacion}  alt="Botón 2"/>
+                <Image src={getEditButtonUbicacion()}  alt="Botón 2"/>
                 <input 
                 value={vehicle_data?.sucursal || ""}
                 type="text" name='sucursal'
@@ -90,7 +136,7 @@ const FormVehicle= ({vehicle_data, setVehicle_data, editing, setEditing, updateV
             </div>
 
             <div className="flex justify-between gap-x-4 mb-2">
-                <Image src={Icon_persona}  alt="Botón 2"/>
+                <Image src={getEditButtonPersona()}  alt="Botón 2"/>
                 <input 
                 value={vehicle_data?.aspirante || ""}
                 type="text" name='aspirante'
@@ -99,15 +145,8 @@ const FormVehicle= ({vehicle_data, setVehicle_data, editing, setEditing, updateV
             </div>            
             {!isHidden && (
             <div className="flex justify-between gap-x-2 ">
-                <button 
-                onClick={ClickCancel}
-                className="block rounded-md px-8 py-2 w-full text-gray-900 shadow-sm ring-1 ring-inset ring-red-600 placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                >
-                    Cancelar
-                </button>
-                <button type="submit" className="block rounded-md px-8 py-2 w-full text-gray-900 shadow-sm ring-1 ring-inset ring-01BEDB-600 placeholder:text-gray-400 sm:text-sm sm:leading-6">
-                    Crear
-                </button>
+                {getCancelButtonImage()}
+                {getUpdateButtonImage()}
             </div>
             )}
         </form>

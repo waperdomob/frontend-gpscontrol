@@ -2,6 +2,8 @@
 import { useState } from "react";
 import FormVehicle from "./components/form.vehicle";
 import ListVehicle from "./components/list.vehicle";
+import Footer from "./components/footer";
+
 import * as VehicleServer from "../services/vehicle.service";
 
 export const dynamic = "force-dynamic"
@@ -56,6 +58,7 @@ function Vehicle(params) {
                 editing = {editing}
                 />
             </div>
+            <Footer/>
         </div>
     )
 }

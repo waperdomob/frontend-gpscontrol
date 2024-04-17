@@ -73,7 +73,7 @@ const FormVehicle= ({vehicle_data, setVehicle_data, editing, setEditing, updateV
         return editing ? 
         <button 
         type="submit" 
-        className="object-right">
+        className="object-right w-12">
             <Image src={Icon_confirmar} className="w-5 h-5 rounded-full" alt="Botón 2"/>
         </button> 
         : 
@@ -88,7 +88,7 @@ const FormVehicle= ({vehicle_data, setVehicle_data, editing, setEditing, updateV
         return editing ? 
         <button 
         onClick={ClickCancel}
-        className="ml-sm:10 md:ml-20 lg:ml-40">
+        className="ml-sm:10 md:ml-20 lg:ml-40 w-12">
             <Image src={Icon_cancelar} className="w-5 h-5 rounded-full" alt="Botón 2"/>
         </button>
         : 
@@ -111,7 +111,7 @@ const FormVehicle= ({vehicle_data, setVehicle_data, editing, setEditing, updateV
     };
     return (
         
-        <div className='rounded-md space-y-5 p-10 border border-[#C5C5C5] '>
+        <div className='rounded-md space-y-5 p-12 border border-[#C5C5C5] '>
             <button 
                 onClick={()=>{setIsHidden(false)}}
             >
@@ -123,7 +123,7 @@ const FormVehicle= ({vehicle_data, setVehicle_data, editing, setEditing, updateV
                 <input 
                 value={vehicle_data?.marca || ""}
                 type="text" name='marca' 
-                className='block rounded-md border-0 p-2 mb-2 w-full text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-100 sm:text-sm sm:leading-6'
+                className={`block rounded-md border-0 p-2 mb-2 w-full text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-100 sm:text-sm sm:leading-6 ${isHidden ? 'disabled' : ''}`}
                 onChange={handleInputChange}/>
             </div>
             <div className="flex justify-between gap-x-4 mb-2">
@@ -131,7 +131,7 @@ const FormVehicle= ({vehicle_data, setVehicle_data, editing, setEditing, updateV
                 <input 
                 value={vehicle_data?.sucursal || ""}
                 type="text" name='sucursal'
-                className='block rounded-md border-0 p-2 mb-2 w-full text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6' 
+                className={`block rounded-md border-0 p-2 mb-2 w-full text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 ${isHidden ? 'disabled' : ''}`} 
                 onChange={handleInputChange}/>
             </div>
 
@@ -140,7 +140,7 @@ const FormVehicle= ({vehicle_data, setVehicle_data, editing, setEditing, updateV
                 <input 
                 value={vehicle_data?.aspirante || ""}
                 type="text" name='aspirante'
-                className='block rounded-md border-0 p-2 mb-2 w-full text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6' 
+                className={`block rounded-md border-0 p-2 mb-2 w-full text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 ${isHidden ? 'disabled' : ''}`} 
                 onChange={handleInputChange}/>
             </div>            
             {!isHidden && (
